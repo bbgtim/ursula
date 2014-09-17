@@ -25,6 +25,10 @@
   - name: add an apt proxy
     template: src=../../../roles/common/templates/etc/apt/apt.conf.d/01proxy dest=/etc/apt/apt.conf.d/01proxy owner=root group=root mode=0644
     when: common.apt_cache is defined
+
+  - name: Enable test backport repository
+    apt_repository: repo='ppa:dlundquist/backports' update_cache=yes
+
   - name: Run a full dist-upgrade (we don't want to preform this each run on existing clusters)
     apt: update_cache=yes cache_valid_time=3600 upgrade=dist
   - name: Ubuntu 14.04 style /etc/network/interfaces.d/ directory
